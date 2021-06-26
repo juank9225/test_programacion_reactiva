@@ -42,7 +42,7 @@ class ServicioTest {
                 .thenAwait(Duration.ofSeconds(1)).verifyComplete();
     }
 
-    @Test
+    /*@Test
     void testTodosFiltro() {
         Flux<String> source = servicio.buscarTodosFiltro();
         StepVerifier
@@ -52,6 +52,17 @@ class ServicioTest {
                 .expectNext("CLOE", "CATE")
                 .expectComplete()
                 .verify();
+    }*/
+
+    @Test
+    void testTodosFiltro() {
+        Flux<String> source = servicio.buscarTodosFiltro();
+        StepVerifier
+                .create(source)
+                .expectNextCount(4)
+                .expectErrorMatches(throwable -> throwable instanceof IllegalArgumentException &&
+                        throwable.getMessage().equals("Mensaje de Error")
+                ).verify();
     }
 
 }
